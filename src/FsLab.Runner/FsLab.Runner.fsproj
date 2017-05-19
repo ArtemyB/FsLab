@@ -10,7 +10,7 @@
     <RootNamespace>FsLab.Runner</RootNamespace>
     <AssemblyName>FsLab.Runner</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <TargetFSharpCoreVersion>4.4.1.0</TargetFSharpCoreVersion>
     <Name>FsLab.Runner</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -49,7 +49,30 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
-  <Import Project="$(FSharpTargetsPath)" />
+  <Choose>
+    <When Condition="$(TargetFSharpCoreVersion) &gt;= 4.3.0.0 AND $(TargetFSharpCoreVersion) &lt; 4.3.1.0 ">
+        <PropertyGroup>
+            <FSharpTargetsPath>$(MSBuildProgramFiles32)\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+        </PropertyGroup>
+    </When>
+    <When Condition="$(TargetFSharpCoreVersion) &gt;= 4.3.1.0 AND $(TargetFSharpCoreVersion) &lt; 4.4.0.0 ">
+        <PropertyGroup>
+            <FSharpTargetsPath>$(MSBuildProgramFiles32)\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+        </PropertyGroup>
+    </When>
+    <When Condition="$(TargetFSharpCoreVersion) &gt;= 4.4.0.0 AND $(TargetFSharpCoreVersion) &lt; 4.4.1.0 ">
+        <PropertyGroup>
+            <FSharpTargetsPath>$(MSBuildProgramFiles32)\Microsoft SDKs\F#\4.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+        </PropertyGroup>
+    </When>
+    <Otherwise>
+        <PropertyGroup>
+            <FSharpTargetsPath>$(MSBuildProgramFiles32)\Microsoft SDKs\F#\4.1\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+        </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <!--<Import Project="$(FSharpTargetsPath)" />-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -64,8 +87,11 @@
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core">
+      <HintPath>..\..\packages\FSharp.Core\lib\net45\FSharp.Core.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <Reference Include="FSharp.Core, Version=4.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
