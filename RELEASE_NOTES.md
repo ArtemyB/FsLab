@@ -1,3 +1,6 @@
+### 1.0.3 (7 May 2017)
+ - Update dependencies (FSharp.Core 4.1.17, FSharp.Data 2.3.3, MathNet.Numerics 3.19)
+
 ### 1.0.2 (30 October 2016)
  - Update XPlot (with new Plotly.js wrapper) and Math.Net
 
